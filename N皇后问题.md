@@ -304,6 +304,7 @@ N   Time
 3. A000170 - OEIS <http://oeis.org/A000170>
 4. QUEENS@TUD <http://queens.inf.tu-dresden.de>
 5. Abramson B, Yung M M. Construction through decomposition: A divide-and-conquer algorithm for the N-queens problem[C]//Proceedings of 1986 ACM Fall joint computer conference. IEEE Computer Society Press, 1986: 620-628.
+
 ## 备注
 除注明外所有程序实验环境为：
 1. 硬件 Intel(R) Core(TM) i5-2430M CPU @ 2.40GHz
