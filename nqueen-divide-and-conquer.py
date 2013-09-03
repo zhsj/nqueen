@@ -47,8 +47,8 @@ def divideConquer(n):
     if not queen_list.has_key(c):
         divideConquer(c)
     
-    for item in queen_list[5]:
-        temp += [i+ b * item for i in queen_list[b]]
+    for item in queen_list[b]:
+        temp += [i+ 5 * item for i in queen_list[5]]
     
     temp = temp[b-c:]
     
