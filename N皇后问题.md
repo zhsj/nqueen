@@ -298,6 +298,95 @@ N   Time
 
 <sup>[5]</sup>利用分治法，理论上可以得到所有 N 皇后问题的一个或更多解（N ≠ 2,3,8,9,14,15,26,27,38,39）
 
+以下是python的实现：
+
+```python
+queen_list = {
+    0: [],          
+    1: [0],
+    4: [1, 3, 0, 2],
+    5: [0, 2, 4, 1, 3],
+    6: [1, 3, 5, 0, 2, 4],
+    7: [0, 2, 4, 6, 1, 3, 5],
+    8: [0, 4, 7, 5, 2, 6, 1, 3],
+    9: [0, 2, 5, 7, 1, 3, 8, 6, 4],
+    10: [0, 2, 5, 7, 9, 4, 8, 1, 3, 6],
+    11: [0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9],
+    12: [0, 2, 4, 7, 9, 11, 5, 10, 1, 6, 8, 3],
+    13: [0, 2, 4, 1, 8, 11, 9, 12, 3, 5, 7, 10, 6],
+    14: [0, 2, 4, 6, 11, 9, 12, 3, 13, 8, 1, 5, 7, 10],
+    15: [0, 2, 4, 1, 9, 11, 13, 3, 12, 8, 5, 14, 6, 10, 7],
+    26: [0, 2, 4, 1, 3, 8, 10, 12, 14, 20, 22, 24, 19, 21, 23, 25, 9, 6, 15, 11, 7, 5, 17, 13, 18, 16],
+    27: [0, 2, 4, 1, 3, 8, 10, 12, 14, 16, 18, 22, 24, 26, 23, 25, 5, 9, 6, 15, 7, 11, 13, 20, 17, 19, 21]
+}
+
+def divideConquer(n):
+    global queen_list
+    flag = 0
+    if n & 1 == 0:
+        n += 1
+        flag = 1
+        
+    if n%3:
+        return
+    
+    if n in [8,9,14,15,26,27,38,39]:
+        return
+    
+    global queen_list
+    c = 5
+    while True:
+        if (n-c)%4:
+            c+=2
+        else:
+            b = (n-c)/4
+            if c%3 and b%3:
+                break
+
+    
+    temp = []
+    if not queen_list.has_key(b):
+        divideConquer(b)
+    if not queen_list.has_key(c):
+        divideConquer(c)
+    
+    for item in queen_list[5]:
+        temp += [i+ b * item for i in queen_list[b]]
+    
+    temp = temp[b-c:]
+    
+    for i in range(b-c):
+        try:
+            temp.remove(i)
+        except:
+            pass
+    temp = [i - b + c for i in temp]
+    temp = queen_list[c] + temp
+    
+    if flag:
+        n = n-1
+        
+    queen_list.update({n:temp})
+    return
+
+def main():
+    global queen_list
+    n = input()
+    divideConquer(n)
+    print queen_list[n]
+    
+if __name__ == "__main__":
+    main()
+```
+
+尝试解111皇后，结果如下：
+
+```bash
+$ python nqueen-divide-and-conquer.py 
+111
+[0, 2, 4, 6, 1, 3, 5, 33, 35, 37, 34, 36, 41, 43, 45, 47, 53, 55, 57, 52, 54, 56, 58, 42, 39, 48, 44, 40, 38, 50, 46, 51, 49, 85, 87, 89, 86, 88, 93, 95, 97, 99, 105, 107, 109, 104, 106, 108, 110, 94, 91, 100, 96, 92, 90, 102, 98, 103, 101, 7, 9, 11, 8, 10, 15, 17, 19, 21, 27, 29, 31, 26, 28, 30, 32, 16, 13, 22, 18, 14, 12, 24, 20, 25, 23, 59, 61, 63, 60, 62, 67, 69, 71, 73, 79, 81, 83, 78, 80, 82, 84, 68, 65, 74, 70, 66, 64, 76, 72, 77, 75]
+```
+
 ## 参考
 1. 图片来自 <http://zh.wikipedia.org/wiki/八皇后问题>
 2. N皇后问题的两个最高效的算法 <http://blog.csdn.net/hackbuteer1/article/details/6657109>
